@@ -4,5 +4,7 @@
     <string name="app_name">500px Stream</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-
+    <string name="consumer_key">2v65aHUw3X5Ct1UZyR2nvL9NizdI57D49iknreVV</string>
+	<string name="consumer_secret">eikFkLO2VF3An3Vci4MtzP7V4vpO0FskPkSDeMiK</string>
+    
 </resources>

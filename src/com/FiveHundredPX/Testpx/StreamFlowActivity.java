@@ -3,6 +3,9 @@ package com.FiveHundredPX.Testpx;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.json.JSONObject;
+
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.DisplayMetrics;
@@ -15,10 +18,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.fivehundredpx.api.*;
 
 
 
-public class StreamFlow extends Activity implements OnClickListener {
+public class StreamFlowActivity extends Activity implements OnClickListener{
 
 	//Screen dimension variables
 	int height;
@@ -33,9 +37,13 @@ public class StreamFlow extends Activity implements OnClickListener {
 	ArrayList<Pair> pairsLeft;
 	LinearLayout primaryView;
 	ArrayList<Groups> groups;
+	String editor = "editors";
+	String fresh = "fresh_today";
+	String getPhotos = "/photos?feature=";
+	int page = 1;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stream_flow);
 		
@@ -44,10 +52,20 @@ public class StreamFlow extends Activity implements OnClickListener {
 		height = displaymetrics.heightPixels;
 		width = displaymetrics.widthPixels;
 		primaryView = (LinearLayout) findViewById(R.id.PrimaryView);
-		pairs = generatePairs(100);
-		//pairsLeft = new ArrayList<Pair>(pairs);
-		//groups = new ArrayList<Groups>();
-		//addStream();
+		boolean connected = CheckInternet();
+		
+		if(connected){
+			
+			PxApi api = new PxApi(null,this.getString(R.string.consumer_key), this.getString(R.string.consumer_secret));
+			String url = getPhotos+editor+"&page="+page;
+			JSONObject json = api.get(url);
+			if(json == null){
+				Toast.makeText(this, "Recieved Json Info", Toast.LENGTH_LONG).show();
+				//pairs = generatePairs(100);
+			}
+			pairs = generatePairs(10);
+		}else
+			Toast.makeText(this, "Data Connection Required!",Toast.LENGTH_LONG).show();
 	}
 	
 
@@ -362,6 +380,26 @@ public class StreamFlow extends Activity implements OnClickListener {
 	
 	public String toString(){
 		return " Big Box = "+bigBox+", Tiny Box = "+tinyBox+", Verticle = "+vertical+", horizontal = "+horizontal;
+	}
+	
+	/*Check if there is a data connection
+	 * 
+	 */
+	public boolean CheckInternet() 
+	{
+	    ConnectivityManager connec = (ConnectivityManager) getApplicationContext().getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+	    android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+	    android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+	    // Here if condition check for wifi and mobile network is available or not.
+	    // If anyone of them is available or connected then it will return true, otherwise false;
+
+	    if (wifi.isConnected()) {
+	        return true;
+	    } else if (mobile.isConnected()) {
+	        return true;
+	    }
+	    return false;
 	}
 
 	@Override
