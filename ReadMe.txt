@@ -1,6 +1,6 @@
 500px is a photo community powered by creative people worldwide that lets you discover, share, buy and sell inspiring photographs.
 
-This application allows the user to easilly view a consistant flow of high quality photographs on their android device.
+This application allows the user to easilly view a dynamic flow of high quality photographs on their android device.
 
 v1
 
