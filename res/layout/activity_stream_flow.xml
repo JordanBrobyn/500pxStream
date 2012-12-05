@@ -5,20 +5,17 @@
     android:background="@color/background_color"
     tools:context=".StreamFlow" >
 
-    <ScrollView 
+    <com.FiveHundred.pxstream.CustomScrollView
         android:id="@+id/ScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-        
+        android:layout_height="fill_parent" >
+
         <LinearLayout
             android:id="@+id/PrimaryView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-		    
-		    
-	    </LinearLayout>
-    </ScrollView>
+        </LinearLayout>
+    </com.FiveHundred.pxstream.CustomScrollView>
 
 </RelativeLayout>
